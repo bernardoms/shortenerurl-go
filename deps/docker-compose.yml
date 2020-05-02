@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test
+      MONGO_NON_ROOT_USERNAM: test
+      MONGO_NON_ROOT_PASSWORD: test
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-volume:/data/db
+
+  shortenerurl-golang:
+    build:
+      context: ../
+    ports:
+      - "8080:8080"
+    environment:
+        NEWRELIC_APP:
+        NEWRELIC_LICENSE:
+        mongoURI: mongodb://test:test@mongo:27017/local?authSource=admin&authMechanism=SCRAM-SHA-1
+    depends_on:
+      - mongo
