@@ -20,7 +20,7 @@ const SHORTENERURL = "/v1/shorteners"
 func main() {
 
 	app, errNewRelic := newrelic.NewApplication(
-		newrelic.NewConfig(os.Getenv("NEWRELIC_APP"), "NEWRELIC_LICENSE"),
+		newrelic.NewConfig(os.Getenv("NEWRELIC_APP"), os.Getenv("NEWRELIC_LICENSE")),
 	)
 
 	if errNewRelic != nil {
